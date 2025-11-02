@@ -12,3 +12,8 @@ score = undefined;
 value = Number(score);
 console.log("undefined as number is ",value);
 
+// datatypes can be differentiated on 2 types :  primitive and reference(non-primitive)
+/*
+ primitive is string,booleam,number,bigInt,null,undefined,symbol (use by value)(uses stack memory)
+ reference : symbol object array (use by reference)(uses heap memory)
+*/
