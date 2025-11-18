@@ -341,3 +341,196 @@ function findSumOfEvenTriples(array){
 }
 updatedArr = findSumOfEvenTriples(new_array);
 console.log(updatedArr);
+
+
+
+
+
+
+// Write the function camelize(str) that changes dash-separated words like “my-short-string” into camel-cased “myShortString”. That is: removes all dashes, each word after dash becomes uppercased.
+
+// camelize("list-style-image") == 'listStyleImage'; ---> use split to split the string into an array, transform it and join back.
+let bigWord = "this-is-himanshu-kumar";
+function camelize(strng){
+    return strng.split('-') //[this, is, himanshu, kumar]
+                .map((word,index) => index===0 ? word : word[0].toUpperCase() + word.slice(1)) // except first word in splited array, for rest all words - capitalize first letter using toUpperCase() + slice every letter after index 0, add it with uppercased letter, add it together and return
+                .join('');  
+}
+let camelizedWord = camelize(bigWord);
+console.log(camelizedWord);
+
+
+
+
+/*
+Write a function filterRange(arr, a, b) that gets an array arr, looks for elements with values higher or equal to a and lower or equal to b and return a result as an array.
+The function should not modify the array. It should return the new array.
+*/
+function filterRange(arr,a,b){ // array is the array , a and b are the numbers for comparison, only return filtered array 
+    return arr.filter((item)=> (item>=a && item<=b));
+}
+
+arr = [5, 3, 8, 1];
+let filtered = filterRange(arr, 1, 4);
+console.log( filtered ); // 3,1 (matching values)
+console.log( arr ); // 5,3,8,1 (not modified)
+
+
+
+
+/*
+
+Filter range "in place"
+
+Write a function filterRangeInPlace(arr, a, b) that gets an array arr and removes from it all values except those that are between a and b. The test is: a ≤ arr[i] ≤ b.
+
+The function should only modify the array. It should not return anything.
+For instance:
+let arr = [5, 3, 8, 1];
+filterRangeInPlace(arr, 1, 4); // removed the numbers except from 1 to 4
+alert( arr ); // [3, 1]
+
+ */
+function filterRangeInPlace(arr,a,b){
+    for(let i=0;i<arr.length;i++){
+        if(!(arr[i]>=a && arr[i]<=b)){
+            arr.splice(i,1);
+        }
+    }
+}
+arr = [5, 3, 8, 1];
+filterRangeInPlace(arr, 1, 4); // removed the numbers except from 1 to 4
+console.log( arr ); // [3, 1]
+
+
+
+/**
+ * Sort in decreasing order
+
+let arr = [5, 2, 1, -10, 8];
+// ... your code to sort it in decreasing order
+alert( arr ); // 8, 5, 2, 1, -10
+
+ */
+arr = [5, 2, 1, -10, 8];
+arr.sort((a,b)=> b-a);  // the idea is --> we returned positive value to denote a is greater and negative value to denote b is greater ---> i just switched their places --> -ve for a greater , +ve for b greater and now it sorts in reverse order, i cant use just sort as it converts all elements into strings and then sorts'em
+console.log( arr ); // 8, 5, 2, 1, -10
+
+
+
+
+/**
+ * Copy and sort array
+
+We have an array of strings arr. We’d like to have a sorted copy of it, but keep arr unmodified.
+
+Create a function copySorted(arr) that returns such a copy.
+ */
+function copySorted(arr){
+    return arr.slice().sort((a,b)=>a.localeCompare(b));
+    // slice() copies the entire array from start to end and return it , after that just sort it simple 
+}
+arr = ["HTML", "JavaScript", "CSS"];
+let sorted = copySorted(arr);
+console.log( sorted ); // CSS, HTML, JavaScript
+console.log( arr ); // HTML, JavaScript, CSS (no changes)
+
+
+
+
+/**
+ * Shuffle an array
+
+Write the function shuffle(array) that shuffles (randomly reorders) elements of the array.
+
+Multiple runs of shuffle may lead to different orders of elements.
+All element orders should have an equal probability. For instance, [1,2,3] can be reordered as [1,2,3] or [1,3,2] or [3,1,2] etc, WITH EQUAL PROBABILITY OF EACH CASE !!!
+
+ */
+temp = [1, 2, 3];
+shuffle(temp);
+shuffle(temp);
+shuffle(temp);
+// there’s a great algorithm called Fisher-Yates shuffle. The idea is to walk the array in the reverse order and swap each element with a random one before it:
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+    // swap elements array[i] and array[j]
+    // we use "destructuring assignment" syntax to achieve that
+    // same can be written as:
+    // let t = array[i]; array[i] = array[j]; array[j] = t
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+
+// testing the fucntion above with test case :
+function shuffle(array){
+    // start traversing from the end of the array
+    for(let i=array.length-1;i>=0;i--){
+        // get an index j from i using random()
+        let j = Math.floor(Math.random()*(i+1));
+        [array[i],array[j]] = [array[j],array[i]];
+    }
+}
+
+let count ={
+    '123':0,
+    '132':0,
+    '312':0,
+    '321':0,
+    '213':0,
+    '231':0
+};
+
+for(let i=0;i<1000000;i++){
+    arr = [1,2,3];
+    shuffle(arr);
+    count[arr.join('')]++;
+}
+// display the count :
+for(let key in count){
+    console.log(`${key} = ${count[key]}`);  // visible that all permutation have nearly same probability of forming after shuffle
+}
+
+
+
+
+
+/**
+ *Filter unique array members
+importance: 4
+Let arr be an array.
+
+Create a function unique(arr) that should return an array with unique items of arr.
+
+ */
+function unique(arr) {
+    let new_arr=[];
+    for(let i=0;i<arr.length;i++){
+        if(!new_arr.includes(arr[i])){
+            new_arr.push(arr[i]);
+        }
+    }
+  return new_arr;
+}
+
+let strings = ["Hare", "Krishna", "Hare", "Krishna",
+  "Krishna", "Krishna", "Hare", "Hare", ":-O"
+];
+
+console.log( unique(strings) ); // Hare, Krishna, :-O
+
+
+// ORR 
+
+function unique(arr) {
+    let new_arr=[];
+    for(let word of arr){
+        if(!new_arr.includes(word)){
+            new_arr.push(word);
+        }
+    }
+  return new_arr;
+}
